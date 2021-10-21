@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BookService } from './books.service';
-import mockBooks from './book.mock';
 
 describe('Post Controller', () => {
   let service: BookService;
@@ -25,6 +24,7 @@ describe('Post Controller', () => {
       ).toBe(true);
     });
   });
+
   describe('Books length', () => {
     it('to be 3', async () => {
       expect(await service.getBooks('author', true, '').books.length).toBe(3);

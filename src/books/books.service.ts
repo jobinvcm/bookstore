@@ -60,6 +60,7 @@ export class BookService {
         id: this.generateId(book.name),
         timestamp: new Date().getTime().toString(),
       });
+
       return { message: '', status: 200 };
     }
 

@@ -7,7 +7,6 @@ import {
   Res,
   HttpStatus,
 } from '@nestjs/common';
-import { AppService } from './app.service';
 import { BookService } from './books/books.service';
 import { BooksDTO } from './books/books.dto';
 import { QueryDto } from './dto/queryDto';
@@ -16,13 +15,10 @@ import { IBook } from './books/IBook';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private readonly bookService: BookService,
-  ) {}
+  constructor(private readonly bookService: BookService) {}
 
   @Get('book')
-  getBooks(@Query() querydto: QueryDto): { books: Array<IBook>} {
+  getBooks(@Query() querydto: QueryDto): { books: Array<IBook> } {
     return this.bookService.getBooks(
       querydto.sortBy,
       querydto.asc,
@@ -33,11 +29,11 @@ export class AppController {
   @Post('book')
   addBook(@Body() booksDto: BooksDTO, @Res() res: Response) {
     const result = this.bookService.addBook(booksDto);
-    if (result.status === 400) {
-      res.statusMessage = result.message;
-      res.status(HttpStatus.BAD_REQUEST).send();
+    if (result.status === 200) {
+      res.status(HttpStatus.OK).send();
     }
 
-    res.status(HttpStatus.OK).send();
+    res.statusMessage = result.message;
+    res.status(HttpStatus.BAD_REQUEST).send();
   }
 }
