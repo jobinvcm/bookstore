@@ -34,6 +34,6 @@ export class AppController {
     }
 
     res.statusMessage = result.message;
-    res.status(HttpStatus.BAD_REQUEST).send();
+    res.status(HttpStatus.BAD_REQUEST).send({ message: 'bad request' });
   }
 }
